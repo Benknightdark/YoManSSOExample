@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+        <button onclick="Auth();">Line Login</button>
+        <button onclick="fbLogin();">fb login</button>
+        <button onclick="googleLogin();">google login</button>
+        <button onclick="linkedInLogin();">linkedIn login</button>
+
+    </div>
+
+<script>
+    function Auth() {
+        var URL ='@Html.Raw(ViewBag.AccessUrl)'
+        window.location.href = URL;
+    }
+
+    function fbLogin()  {
+        let URL=`@Html.Raw(ViewBag.FBAccessUrl)`
+        window.location.href = URL;
+    }
+        function googleLogin()  {
+        let URL=`@Html.Raw(ViewBag.GoogelAccessUrl)`
+        window.location.href = URL;
+    }
+
+    function linkedInLogin()  {
+        let URL=`@Html.Raw(ViewBag.LinkedAccessUrl)`
+        window.location.href = URL;
+    }
+</script>
