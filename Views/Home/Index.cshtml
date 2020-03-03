@@ -9,6 +9,7 @@
         <button onclick="fbLogin();">fb login</button>
         <button onclick="googleLogin();">google login</button>
         <button onclick="linkedInLogin();">linkedIn login</button>
+        <button onclick="MSLogin();">MS login</button>
 
     </div>
 
@@ -31,4 +32,10 @@
         let URL=`@Html.Raw(ViewBag.LinkedAccessUrl)`
         window.location.href = URL;
     }
+
+    function MSLogin()  {
+        let URL=`@Html.Raw(ViewBag.MSAccessUrl)`
+        window.location.href = URL;
+    }
+    
 </script>

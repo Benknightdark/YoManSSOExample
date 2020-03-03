@@ -19,23 +19,23 @@ namespace Web.Controllers {
         private FBService _fBService { get; set; }
         private GoogleService _googleService { get; set; }
         private LinkedInService _linkedService { get; set; }
-
-        public HomeController (ILogger<HomeController> logger, LineService lineService, FBService fBService, GoogleService googleService
-        ,LinkedInService linkedService
-        ) {
+        private MSService _msService;
+        public HomeController (ILogger<HomeController> logger, LineService lineService, FBService fBService, GoogleService googleService, LinkedInService linkedService, MSService msService) {
 
             _logger = logger;
             _lineService = lineService;
             _fBService = fBService;
             _googleService = googleService;
-            _linkedService=linkedService;
+            _linkedService = linkedService;
+            _msService = msService;
         }
 
         public async Task<IActionResult> Index () {
             ViewBag.AccessUrl = await _lineService.GetAccessUrl ();
             ViewBag.FBAccessUrl = await _fBService.GetAccessUrl ();
             ViewBag.GoogelAccessUrl = await _googleService.GetAccessUrl ();
-            ViewBag.LinkedAccessUrl=await _linkedService.GetAccessUrl();
+            ViewBag.LinkedAccessUrl = await _linkedService.GetAccessUrl ();
+            ViewBag.MSAccessUrl = await _msService.GetAccessUrl ();
 
             return View ();
         }
@@ -51,7 +51,7 @@ namespace Web.Controllers {
             var Data = await _fBService.GetAccessToken (Code);
             _logger.LogInformation (Data.access_token);
             _logger.LogInformation ("====================================");
-            _logger.LogInformation ((await _fBService.GetUserProfile (Data)).name);
+            _logger.LogInformation ((await _fBService.GetProfile (Data)).name);
 
             return RedirectToAction ("Index");
         }
@@ -60,15 +60,15 @@ namespace Web.Controllers {
             _logger.LogInformation (Code);
 
             //  _logger.LogInformation("====================================");
-             var Data = await _linkedService.GetAccessToken(Code); 
-            _logger.LogInformation(Data.access_token);
+            var Data = await _linkedService.GetAccessToken (Code);
+            _logger.LogInformation (Data.access_token);
             //             _logger.LogInformation(Data.id_token);
-            var profile=await _linkedService.GetUserProfile(Data);
+            var profile = await _linkedService.GetProfile (Data);
 
             //  _logger.LogInformation("====================================");
-             _logger.LogInformation(profile.id);
-             _logger.LogInformation(profile.localizedFirstName);
-             _logger.LogInformation(profile.localizedLastName);
+            _logger.LogInformation (profile.id);
+            _logger.LogInformation (profile.localizedFirstName);
+            _logger.LogInformation (profile.localizedLastName);
 
             return RedirectToAction ("Index");
         }
@@ -82,7 +82,7 @@ namespace Web.Controllers {
             _logger.LogInformation (Data.id_token);
 
             _logger.LogInformation ("====================================");
-            _logger.LogInformation ((await _googleService.GetUserProfile (Data)).id);
+            _logger.LogInformation ((await _googleService.GetProfile (Data)).id);
 
             return RedirectToAction ("Index");
         }
@@ -100,6 +100,24 @@ namespace Web.Controllers {
                 _logger.LogInformation (JsonConvert.SerializeObject (profile));
 
                 _logger.LogInformation ("====================================");
+            }
+            return RedirectToAction ("Index");
+        }
+        public async Task<IActionResult> MSCallBack () {
+            var dd = Request.Query["code"];
+            _logger.LogInformation (dd);
+            if (!string.IsNullOrEmpty (dd)) {
+                var token = await _msService.GetAccessToken (dd);
+
+                 _logger.LogInformation ((token.access_token));
+                // _logger.LogInformation ("====================================");
+                // _logger.LogInformation (await _lineService.GetEmail (token));
+                // _logger.LogInformation ("====================================");
+
+                // var profile = await _lineService.GetProfile (token);
+                // _logger.LogInformation (JsonConvert.SerializeObject (profile));
+
+                // _logger.LogInformation ("====================================");
             }
             return RedirectToAction ("Index");
         }
