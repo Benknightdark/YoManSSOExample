@@ -114,8 +114,9 @@ namespace Web.Controllers {
                 // _logger.LogInformation (await _lineService.GetEmail (token));
                 // _logger.LogInformation ("====================================");
 
-                // var profile = await _lineService.GetProfile (token);
-                // _logger.LogInformation (JsonConvert.SerializeObject (profile));
+             var profile = await _msService.GetProfile (token);
+                _logger.LogInformation ( (profile.displayName));
+                _logger.LogInformation ( (profile.id));
 
                 // _logger.LogInformation ("====================================");
             }
