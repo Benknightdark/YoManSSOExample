@@ -31,10 +31,15 @@ namespace Web.Controllers {
         }
 
         public async Task<IActionResult> Index () {
+            // Line OAuth2 登入網址
             ViewBag.AccessUrl = await _lineService.GetAccessUrl ();
+            // Facebook OAuth2 登入網址
             ViewBag.FBAccessUrl = await _fBService.GetAccessUrl ();
+            // Google OAuth2 登入網址
             ViewBag.GoogelAccessUrl = await _googleService.GetAccessUrl ();
+            // LinkedIn OAuth2 登入網址
             ViewBag.LinkedAccessUrl = await _linkedService.GetAccessUrl ();
+            // Microsoft OAuth2 登入網址
             ViewBag.MSAccessUrl = await _msService.GetAccessUrl ();
 
             return View ();
