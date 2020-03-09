@@ -57,6 +57,8 @@ namespace Web.Controllers {
             _logger.LogInformation (Data.access_token);
             _logger.LogInformation ("====================================");
             _logger.LogInformation ((await _fBService.GetProfile (Data)).name);
+                            _logger.LogInformation ("====================================");
+            _logger.LogInformation ((await _fBService.GetAppicationInfo (Data)).name);
 
             return RedirectToAction ("Index");
         }
