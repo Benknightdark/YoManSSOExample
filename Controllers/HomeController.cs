@@ -57,8 +57,7 @@ namespace Web.Controllers {
             _logger.LogInformation (Data.access_token);
             _logger.LogInformation ("====================================");
             _logger.LogInformation ((await _fBService.GetProfile (Data)).name);
-                            _logger.LogInformation ("====================================");
-            _logger.LogInformation ((await _fBService.GetAppicationInfo (Data)).name);
+            _logger.LogInformation ("====================================");
 
             return RedirectToAction ("Index");
         }
@@ -72,10 +71,11 @@ namespace Web.Controllers {
             //             _logger.LogInformation(Data.id_token);
             var profile = await _linkedService.GetProfile (Data);
 
-            //  _logger.LogInformation("====================================");
+            _logger.LogInformation ("====================================");
             _logger.LogInformation (profile.id);
             _logger.LogInformation (profile.localizedFirstName);
             _logger.LogInformation (profile.localizedLastName);
+            _logger.LogInformation ("====================================");
 
             return RedirectToAction ("Index");
         }
@@ -86,10 +86,12 @@ namespace Web.Controllers {
             _logger.LogInformation ("====================================");
             var Data = await _googleService.GetAccessToken (Code);
             // _logger.LogInformation(Data.access_token);
+
+            _logger.LogInformation ("====================================");
+            //  _logger.LogInformation ((await _googleService.GetProfile (Data)).id);
             _logger.LogInformation (Data.id_token);
 
             _logger.LogInformation ("====================================");
-            _logger.LogInformation ((await _googleService.GetProfile (Data)).id);
 
             return RedirectToAction ("Index");
         }
@@ -107,6 +109,8 @@ namespace Web.Controllers {
                 _logger.LogInformation (JsonConvert.SerializeObject (profile));
 
                 _logger.LogInformation ("====================================");
+                _logger.LogInformation (token.id_token);
+
             }
             return RedirectToAction ("Index");
         }
@@ -116,14 +120,14 @@ namespace Web.Controllers {
             if (!string.IsNullOrEmpty (dd)) {
                 var token = await _msService.GetAccessToken (dd);
 
-                 _logger.LogInformation ((token.access_token));
+                _logger.LogInformation ((token.access_token));
                 // _logger.LogInformation ("====================================");
                 // _logger.LogInformation (await _lineService.GetEmail (token));
                 // _logger.LogInformation ("====================================");
 
-             var profile = await _msService.GetProfile (token);
-                _logger.LogInformation ( (profile.displayName));
-                _logger.LogInformation ( (profile.id));
+                var profile = await _msService.GetProfile (token);
+                _logger.LogInformation ((profile.displayName));
+                _logger.LogInformation ((profile.id));
 
                 // _logger.LogInformation ("====================================");
             }
